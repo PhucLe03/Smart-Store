@@ -1,6 +1,10 @@
-*/node_modules
 */.git*
 
+*/node_modules
+
 */__py*
+*/*/__py*
+*/.venv
+
 .vscode*
 */.vscode*
