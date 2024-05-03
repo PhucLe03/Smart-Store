@@ -2,26 +2,30 @@ import axios from '../api/api.js';
 
 class AuthService {
 
-    login(user){
+    login(user) {
         return axios
-                .post('auth/signin', {
-                    email: user.email,
-                    password: user.password,
-                })
-                .then(response => {
-                    let user = JSON.stringify(response.data);
-                    if(response.data.accessToken) {
-                        localStorage.setItem('user', user);
-                    }
-                    return JSON.parse(user);
-                })
+            .post('auth/signin', {
+                email: user.email,
+                password: user.password,
+            }, {
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
+            })
+            .then(response => {
+                let user = JSON.stringify(response.data);
+                if (response.data.accessToken) {
+                    localStorage.setItem('user', user);
+                }
+                return JSON.parse(user);
+            })
     }
 
     logout() {
         localStorage.removeItem('user');
     }
 
-    register(user){
+    register(user) {
         return axios.post('auth/signup', {
             username: user.username,
             name: user.name,
@@ -32,7 +36,7 @@ class AuthService {
             OISPCode: user.OISPCode,
             role: user.role,
             email: user.email,
-            password: user.password, 
+            password: user.password,
         });
     }
 }

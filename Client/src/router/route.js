@@ -8,10 +8,10 @@ import About from '../views/About.vue'
 import NotFound from '../views/NotFound.vue'
 
 import StudentHomeView from '../views/student/studentHome.vue'
-import FormView from '../views/Student/formView.vue'
-import FormResultView from '../views/Student/formResult.vue'
-import buddyBView from '../views/Student/buddyB.vue'
-import buddyAView from '../views/Student/buddyA.vue'
+import FormView from '../views/student/formView.vue'
+import FormResultView from '../views/student/formResult.vue'
+import buddyBView from '../views/student/buddyB.vue'
+import buddyAView from '../views/student/buddyA.vue'
 
 import AdminHomeView from '../views/oisp/adminHome.vue'
 import MatchingView from '../views/oisp/matching.vue'
@@ -25,70 +25,70 @@ const routes = [
         path: '/',
         component: Home,
         meta: {
-            title: 'Home - Buddy Matching System',
+            title: 'Home - Smart Konbini',
         }
     },
     {
         path: '/login',
         component: LoginView,
         meta: {
-            title: 'Login - Buddy Matching System',
+            title: 'Login - Smart Konbini',
         }
     },
     {
         path: '/register',
         component: RegisterView,
         meta: {
-            title: 'Register - Buddy Matching System',
+            title: 'Register - Smart Konbini',
         }
     },
     {
         path: '/student',
         component: StudentHomeView,
         meta: {
-            title: 'Home - Buddy Matching System',
+            title: 'Home - Smart Konbini',
         }
     },
     {
         path: '/about',
         component: About,
         meta: {
-            title: 'About - Buddy Matching System',
+            title: 'About - Smart Konbini',
         }
     },
     {
         path: '/form',
         component: FormView,
         meta: {
-            title: 'Form - Buddy Matching System',
+            title: 'Form - Smart Konbini',
         }
     },
     {
         path: '/form-result',
         component: FormResultView,
         meta: {
-            title: 'Finish - Buddy Matching System',
+            title: 'Finish - Smart Konbini',
         }
     },
     {
         path: '/buddyB',
         component: buddyBView,
         meta: {
-            title: 'Your Buddy B - Buddy Matching System',
+            title: 'Your Buddy B - Smart Konbini',
         }
     },
     {
         path: '/buddyA',
         component: buddyAView,
         meta: {
-            title: 'Your Buddy A - Buddy Matching System',
+            title: 'Your Buddy A - Smart Konbini',
         }
     },
     {
         path: '/admin',
         component: AdminHomeView,
         meta: {
-            title: 'Home - Buddy Matching System',
+            title: 'Home - Smart Konbini',
         }
     },
 
@@ -97,21 +97,21 @@ const routes = [
         path: '/buddy-result',
         component: BuddyResult,
         meta: {
-            title: 'Buddy Result - Buddy Matching System',
+            title: 'Buddy Result - Smart Konbini',
         }
     },
     // {
     //     path: '/pr2152250',
     //     component: PR2152250,
     //     meta: {
-    //         title: 'Phoenix Result - Buddy Matching System',
+    //         title: 'Phoenix Result - Smart Konbini',
     //     }
     // },
     {
         path: '/match',
         component: MatchingView,
         meta: {
-            title: 'Matching - Buddy Matching System',
+            title: 'Matching - Smart Konbini',
         }
     },
 
