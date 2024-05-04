@@ -6,8 +6,10 @@ from pydantic import BaseModel
 # from typing import Annotated
 import mysql.connector as sqlcon
 import json
+import pickle
 
 from SmartCom.face_validator import Face_Validator
+import SmartCom.util as util
 
 be_app  = FastAPI()
 
@@ -70,17 +72,28 @@ class User(BaseModel):
 async def signin(email: str = Form(), password: str = Form()):
     # item = UserLogin(email=email, password=password)
     try:
-        sql = "SELECT * FROM user WHERE email = %s AND password= %s"
-        db_cursor.execute(sql, (str(email), str(password)))
+        query_sql = "SELECT * FROM user WHERE email = %s AND password= %s"
+        query_var = (str(email), str(password))
+        db_cursor.execute(query_sql, query_var)
         db_res = db_cursor.fetchone()
-        final_res = {}
-        for i, col in enumerate(db_cursor.description):
-            # print('col', col[0])
-            final_res[col[0]] = db_res[i]
-        # print('res', final_res)
+        final_res = util.fetchone_then_label(db_res, db_cursor.description)
         final_res['accessToken'] = True
-        # NOTE: return json object of the user
         return JSONResponse(jsonable_encoder(final_res))
+        # final_res = {}
+        # for i, col in enumerate(db_cursor.description):
+        #     # print('col', col[0])
+        #     final_res[col[0]] = db_res[i]
+        # print('res', final_res)
+        encode = final_res['face_encode']
+        res = {}
+        res['encode'] = encode
+        return JSONResponse(jsonable_encoder(res))
+        final_res['face_encode'] = pickle.loads(bytes(encode))
+        # print(pickle.loads(encode))
+        # NOTE: return json object of the user
     except Exception as e:
+        print('!!!Server Error:', e)
         raise HTTPException(status_code=404, detail="Email or password is incorrect")
+
+
 
