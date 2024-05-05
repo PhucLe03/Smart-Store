@@ -26,18 +26,29 @@ class AuthService {
     }
 
     register(user) {
-        return axios.post('auth/signup', {
+        const formData = new FormData()
+        const userdata = {
             username: user.username,
             name: user.name,
-            classCode: user.classCode,
-            studentCode: user.studentCode,
-            bankBranch: user.bankBranch,
-            bankNum: user.bankNum,
-            OISPCode: user.OISPCode,
-            role: user.role,
+            // classCode: user.classCode,
+            // studentCode: user.studentCode,
+            // bankBranch: user.bankBranch,
+            // bankNum: user.bankNum,
+            // OISPCode: user.OISPCode,
+            // role: user.role,
             email: user.email,
             password: user.password,
-        });
+        }
+        formData.append('user_register', JSON.stringify(userdata))
+        formData.append('file', user.file_upload)
+        return axios.post('auth/signup', formData,
+            {
+                headers:
+                {
+                    'Content-Type': 'multipart/form-data'
+                    // 'Content-Type': 'application/x-www-form-urlencoded'
+                }
+            });
     }
 }
 

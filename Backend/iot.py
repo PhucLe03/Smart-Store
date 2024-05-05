@@ -31,11 +31,28 @@ def read_user_face(email):
     db_cursor.execute(query_sql, query_var)
     result = db_cursor.fetchone()
     # user = util.fetchone_then_label(result, db_cursor.description)
+    # print('faceencode:', result[0])
     return result[0]
 
+face_read = Face_Reader()
+# TODO: 
+image = "./.venv/imgs/Phuc.JPG"
+face = face_read.get_face_from_image(image)
+if not face is None:
+    print('one face')
+else:
+    print('More than one face')
 
+
+
+exit()
+
+email = "phuc.le1103@hcmut.edu.vn"
 email = "phuc.le@gmail.com"
 face = (read_user_face(email))
+if face == "":
+    print('faceid not register')
+    exit()
 array_list = json.loads(face)
 
 person_face = numpy.array(array_list)
@@ -43,12 +60,14 @@ person_face = numpy.array(array_list)
 
 face_read = Face_Reader()
 first_face = (face_read.get_face_from_video())
-
-match = face_recognition.compare_faces([person_face], first_face)
-if True in match:
-    print('found')
+if not first_face is None:
+    match = face_recognition.compare_faces([person_face], first_face)
+    if True in match:
+        print('found')
+    else:
+        print('not found')
 else:
-    print('not found')
+    print('More than one face found')
 
 
 

@@ -21,7 +21,7 @@
                 </div>
                 <div class="mb-6" style="display: flex; justify-content: center;">
                     <form class="text-black-500 border border-blue-500 hover:bg-blue-500 hover:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 font-semibold rounded-lg text-sm px-4 py-2 text-center">
-                        <input style="display: none;"  id="file_upload" type="file" accept="image/png, image/gif, image/jpeg"/> 
+                        <input style="display: none;"  id="file_upload" @change="getinputfile" type="file" accept="image/png, image/gif, image/jpeg, image.jpg"/> 
                         <label style="display: block;" for="file_upload">Upload your ID</label>
                     </form>
                 </div>
@@ -59,6 +59,7 @@
                     bankBranch: "",
                     bankNum: "",
                     OISPCode: "",
+                    file_upload: ""
                 },
             };
         },
@@ -71,6 +72,10 @@
             },
         },
         methods: {
+            getinputfile(event) {
+               let files = event.target.files;
+               if (files.length) this.register.file_upload = files[0];
+           },
             handleRegister() {
                 console.log(this.register)
                 this.$store.dispatch("register", this.register).then(
