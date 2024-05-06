@@ -44,12 +44,12 @@ class Face_Reader():
                 # face_encodings = face_locations
                 if len(face_encodings) == 1:
                     self.video_capture.release()
-                    cv2.destroyAllWindows()
+                    # cv2.destroyAllWindows()
                     # return result
                     return face_encodings[0]
                 else:
                     self.video_capture.release()
-                    cv2.destroyAllWindows()
+                    # cv2.destroyAllWindows()
                     return None
 
             process_this_frame = not process_this_frame
@@ -149,5 +149,5 @@ class Face_Validator():
 
         # Release handle to the webcam
         self.video_capture.release()
-        cv2.destroyAllWindows()
+        # cv2.destroyAllWindows()
         return result

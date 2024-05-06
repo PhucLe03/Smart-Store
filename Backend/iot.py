@@ -34,21 +34,10 @@ def read_user_face(email):
     # print('faceencode:', result[0])
     return result[0]
 
-face_read = Face_Reader()
-# TODO: 
-image = "./.venv/imgs/Phuc.JPG"
-face = face_read.get_face_from_image(image)
-if not face is None:
-    print('one face')
-else:
-    print('More than one face')
-
-
-
-exit()
 
 email = "phuc.le1103@hcmut.edu.vn"
 email = "phuc.le@gmail.com"
+email = "phuong@gmail.com"
 face = (read_user_face(email))
 if face == "":
     print('faceid not register')
@@ -56,6 +45,7 @@ if face == "":
 array_list = json.loads(face)
 
 person_face = numpy.array(array_list)
+print(person_face)
 
 
 face_read = Face_Reader()

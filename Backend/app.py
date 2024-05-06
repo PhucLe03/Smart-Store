@@ -8,8 +8,9 @@ import mysql.connector as sqlcon
 import json
 import pickle
 import uuid
+import os
 
-from SmartCom.face_validator import Face_Validator
+from SmartCom.face_validator import Face_Validator, Face_Reader
 import SmartCom.util as util
 
 be_app = FastAPI()
@@ -37,6 +38,7 @@ be_app.add_middleware(
     allow_headers=["*"],
 )
 
+face_read = Face_Reader()
 
 @be_app.get("/")
 async def start():
@@ -123,14 +125,41 @@ async def signup(user_register: str = Form(), file: UploadFile = File(...)):
     # user_register = form.user_register
     # file = form.file
     user = json.loads(user_register)
-    imgdir = "./temp/imgs/"
+    # print(user)
+    # imgdir = "./temp/imgs/"
+    # for folder in os.listdir(os.getcwd()):
+    #     print(folder)
+    imgdir = os.path.join(os.getcwd(), 'temp')
+    imgdir = os.path.join(imgdir, 'imgs')
+    # print(imgdir)
     file.filename = f"{uuid.uuid4()}.jpg"
     contents = await file.read()  # <-- Important!
 
     # example of how you can save the file
-    with open(f"{imgdir}{file.filename}", "wb") as f:
+    imgfile = os.path.join(imgdir, file.filename)
+    with open(imgfile, "wb") as f:
+    # with open(f"{imgdir}{file.filename}", "wb") as f:
         f.write(contents)
-    res = {"user": user['name'] , "filename": file.filename}
+    res = {"user": user['name'] , "message": "registration successful"}
+    try:
+        temp = face_read.get_face_from_image(imgfile)
+        face = '[' + ','.join([str(x) for x in temp]) + ']'
+        query_sql = "INSERT INTO `user` (email, password, name, face_encode) VALUES (%s, %s, %s, %s);"
+        query_var = [(user['email']), (user['password']), (user['name']), str(face)]
+        # print(query_var)
+        db_cursor.execute(query_sql, query_var)
+        database.commit()
+        
+        # delete temp image after finish
+        os.remove(imgfile)
+        return JSONResponse(jsonable_encoder(res))
+
+    except Exception as e:
+        print('!!!Server Error:', e)
+        os.remove(imgfile)
+        error = {}
+        error['message'] = "Some errors occured"
+        return JSONResponse(content=error, status_code=status.HTTP_404_NOT_FOUND)
     return JSONResponse(jsonable_encoder(res))
 
 
