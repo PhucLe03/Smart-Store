@@ -10,7 +10,7 @@ import pickle
 import uuid
 import os
 
-from SmartCom.face_validator import Face_Validator, Face_Reader
+from SmartCom.face_validator import Face_Validator
 import SmartCom.util as util
 
 be_app = FastAPI()
@@ -38,7 +38,7 @@ be_app.add_middleware(
     allow_headers=["*"],
 )
 
-face_read = Face_Reader()
+face_read = Face_Validator()
 
 @be_app.get("/")
 async def start():
@@ -52,9 +52,9 @@ async def test_param(param):
 
 @be_app.get("/face")
 async def face_recog():
-    fv = Face_Validator(wait=20)
+    # fv = Face_Validator(wait=20)
     url = "https://dxwd4tssreb4w.cloudfront.net/image/5d57c4480c84b88ccfa086c42241e7c1"  # Obama's image
-    match = fv.capture_and_validate(url)
+    match = face_read.capture_and_validate(url)
     return match
 
 

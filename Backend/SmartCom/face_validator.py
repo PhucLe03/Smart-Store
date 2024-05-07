@@ -7,10 +7,18 @@ import urllib.request
 # import sys
 
 
-class Face_Reader():
-    def __init__(self):
-        self.video_capture = cv2.VideoCapture(0)
+# class Face_Reader():
+#     def __init__(self):
+#         self.video_capture = cv2.VideoCapture(0)
 
+    
+
+
+class Face_Validator():
+    def __init__(self, wait=10):
+        self.video_capture = cv2.VideoCapture(0)
+        self.max_wait = wait
+    
     def get_face_from_image(self, imgfile):
         image = face_recognition.load_image_file(imgfile)
         face_locations = face_recognition.face_locations(image)
@@ -21,44 +29,41 @@ class Face_Reader():
             return None
 
     def get_face_from_video(self):
-        process_this_frame = True
+        # process_this_frame = True
         while True:
             _, frame = self.video_capture.read()
             frame = cv2.flip(frame, 1)
 
             # Only process every other frame of video to save time
-            if process_this_frame:
+            # if process_this_frame:
                 # Resize frame of video to 1/4 size for faster face recognition processing
-                small_frame = cv2.resize(frame, (0, 0), fx=0.25, fy=0.25)
+            small_frame = cv2.resize(frame, (0, 0), fx=0.25, fy=0.25)
 
-                # Convert the image from BGR color (which OpenCV uses) to RGB color (which face_recognition uses)
-                # rgb_small_frame = small_frame[:, :, ::-1]
-                rgb_small_frame = np.ascontiguousarray(small_frame[:, :, ::-1])
+            # Convert the image from BGR color (which OpenCV uses) to RGB color (which face_recognition uses)
+            # rgb_small_frame = small_frame[:, :, ::-1]
+            rgb_small_frame = np.ascontiguousarray(small_frame[:, :, ::-1])
 
-                # Find all the faces and face encodings in the current frame of video
-                face_locations = face_recognition.face_locations(
-                    rgb_small_frame)
-                face_encodings = face_recognition.face_encodings(
-                    rgb_small_frame, face_locations)
-                # print(face_encodings)
-                # face_encodings = face_locations
-                if len(face_encodings) == 1:
-                    self.video_capture.release()
-                    # cv2.destroyAllWindows()
-                    # return result
-                    return face_encodings[0]
-                else:
-                    self.video_capture.release()
-                    # cv2.destroyAllWindows()
-                    return None
+            # Find all the faces and face encodings in the current frame of video
+            face_locations = face_recognition.face_locations(
+                rgb_small_frame)
+            face_encodings = face_recognition.face_encodings(
+                rgb_small_frame, face_locations)
+            # print(face_encodings)
+            # face_encodings = face_locations
+            if len(face_encodings) > 0:
+                self.video_capture.release()
+                cv2.destroyAllWindows()
+                # return result
+                return face_encodings
+                # else:
+                #     self.video_capture.release()
+                #     cv2.destroyAllWindows()
+                #     return None
 
-            process_this_frame = not process_this_frame
-
-
-class Face_Validator():
-    def __init__(self, wait=10):
-        self.video_capture = cv2.VideoCapture(0)
-        self.max_wait = wait
+            # process_this_frame = not process_this_frame
+        self.video_capture.release()
+        cv2.destroyAllWindows()
+        return None
 
     # Read image from file, imgfile is the path to file
     def read_face(self, imgfile: str):
