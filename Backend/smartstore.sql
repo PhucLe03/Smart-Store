@@ -54,7 +54,7 @@ CREATE TABLE `user` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `user`
+-- Dumping data for table `user`3r4
 --
 
 INSERT INTO `user` (`id`, `email`, `password`, `name`, `face_encode`) VALUES

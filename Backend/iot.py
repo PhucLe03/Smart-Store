@@ -7,7 +7,8 @@ import pickle
 import json
 from fastapi.encoders import jsonable_encoder
 import sys
-
+import http
+import requests
 
 database = sqlcon.connect(
     host="localhost",
@@ -27,14 +28,12 @@ def read_user_face(email):
     result = db_cursor.fetchone()
     # user = util.fetchone_then_label(result, db_cursor.description)
     # print('faceencode:', result[0])
-    return result[0]
-
-
-def validate_user_face(face_read: Face_Validator, email: str):
-    user_face_code = read_user_face(email)
+    user_face_code = result[0]
     array_list = json.loads(user_face_code)
-    user_face = numpy.array(array_list)
+    return numpy.array(array_list)
 
+
+def validate_user_face(face_read: Face_Validator, user_face: numpy.ndarray):
     faces = face_read.get_face_from_video()
     if faces is None:
         return False
@@ -72,9 +71,6 @@ def validate_user_face(face_read: Face_Validator, email: str):
 # else:
 #     print('More than one face found')
 
-# email = "phuc.le1103@hcmut.edu.vn"
-# email = "phuc.le@gmail.com"
-# email = "phuong@gmail.com"
 
 def main():
     email = ""
@@ -84,8 +80,23 @@ def main():
         print('Usage: python3 iot.py <email>')
         return
 
+    email = "phuc.le1103@hcmut.edu.vn"
+    email = "phuc.le@gmail.com"
+    email = "phuong@gmail.com"
+    
+    host = "http://172.16.97.1:3000"
+    
+    url = f"{host}/api/auth/face_encode/{email}"
+    response = requests.get(url)
+    response_json = response.json()
+    encode = response_json['encode']
+    
+    array_list = json.loads(encode)
+    user_face = numpy.array(array_list)
+    
+    print(user_face)
     face_read = Face_Validator()
-    if validate_user_face(face_read, email):
+    if validate_user_face(face_read, user_face):
         print('validate success')
     else:
         print('validate fail')

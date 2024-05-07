@@ -4,6 +4,10 @@ import numpy as np
 import time
 import urllib.request
 
+import mysql.connector as sqlcon
+import json
+import numpy
+
 # import sys
 
 
@@ -11,6 +15,56 @@ import urllib.request
 #     def __init__(self):
 #         self.video_capture = cv2.VideoCapture(0)
 
+class Database():
+    def __init__(self):
+        self.database = sqlcon.connect(
+            host="localhost",
+            port=3306,
+            user="root",
+            password="",
+            database="test"
+        )
+        self.db_cursor = self.database.cursor()
+        
+    def select(self, query_sql: str, query_var: list[str] = None):
+        if query_var:
+            self.db_cursor.execute(query_sql, query_var)
+        else:
+            self.db_cursor.execute(query_sql)
+        return
+    
+    def insert(self, query_sql: str, query_var: list[str] = None):
+        if query_var:
+            self.db_cursor.execute(query_sql, query_var)
+            self.database.commit()
+        else:
+            self.db_cursor.execute(query_sql)
+            self.database.commit()
+        return
+    
+    def fetchone(self):
+        return self.db_cursor.fetchone(), self.db_cursor.description
+    
+    def fetchall(self):
+        return self.db_cursor.fetchall(), self.db_cursor.description
+        
+    def read_user_face(self, email):
+        query_sql = "SELECT face_encode from user WHERE email = %s"
+        query_var = [str(email)]
+        self.db_cursor.execute(query_sql, query_var)
+        result = self.db_cursor.fetchone()
+        # user = util.fetchone_then_label(result, db_cursor.description)
+        # print('faceencode:', result[0])
+        user_face_code = result[0]
+        array_list = json.loads(user_face_code)
+        return numpy.array(array_list)
+    
+    def read_user_face_raw(self, email):
+        query_sql = "SELECT face_encode from user WHERE email = %s"
+        query_var = [str(email)]
+        self.db_cursor.execute(query_sql, query_var)
+        result = self.db_cursor.fetchone()
+        return result[0]
     
 
 
@@ -18,7 +72,7 @@ class Face_Validator():
     def __init__(self, wait=10):
         self.video_capture = cv2.VideoCapture(0)
         self.max_wait = wait
-    
+
     def get_face_from_image(self, imgfile):
         image = face_recognition.load_image_file(imgfile)
         face_locations = face_recognition.face_locations(image)
@@ -36,7 +90,7 @@ class Face_Validator():
 
             # Only process every other frame of video to save time
             # if process_this_frame:
-                # Resize frame of video to 1/4 size for faster face recognition processing
+            # Resize frame of video to 1/4 size for faster face recognition processing
             small_frame = cv2.resize(frame, (0, 0), fx=0.25, fy=0.25)
 
             # Convert the image from BGR color (which OpenCV uses) to RGB color (which face_recognition uses)

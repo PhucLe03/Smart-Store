@@ -10,24 +10,28 @@ import pickle
 import uuid
 import os
 
-from SmartCom.face_validator import Face_Validator
+from SmartCom.face_validator import Face_Validator, Database
 import SmartCom.util as util
 
 be_app = FastAPI()
 
-database = sqlcon.connect(
-    host="localhost",
-    port=3306,
-    user="root",
-    password="",
-    database="test"
-)
+# database = sqlcon.connect(
+#     host="localhost",
+#     port=3306,
+#     user="root",
+#     password="",
+#     database="test"
+# )
 
-db_cursor = database.cursor()
+# db_cursor = database.cursor()
+
+be_db = Database()
 
 origins = [
     "http://localhost",
     "http://localhost:5173",
+    "http://172.16.97.1",
+    "http://172.16.97.1:3000"
 ]
 
 be_app.add_middleware(
@@ -105,9 +109,9 @@ async def signin(email: str = Form(), password: str = Form()):
     try:
         query_sql = "SELECT * FROM user WHERE email = %s AND password= %s"
         query_var = (str(email), str(password))
-        db_cursor.execute(query_sql, query_var)
-        db_res = db_cursor.fetchone()
-        final_res = util.fetchone_then_label(db_res, db_cursor.description)
+        be_db.select(query_sql, query_var)
+        db_res, db_des = be_db.fetchone()
+        final_res = util.fetchone_then_label(db_res, db_des)
         final_res['accessToken'] = True
         final_res['role'] = "ROLE_STUDENT"
         # NOTE: return json object of the user
@@ -147,8 +151,7 @@ async def signup(user_register: str = Form(), file: UploadFile = File(...)):
         query_sql = "INSERT INTO `user` (email, password, name, face_encode) VALUES (%s, %s, %s, %s);"
         query_var = [(user['email']), (user['password']), (user['name']), str(face)]
         # print(query_var)
-        db_cursor.execute(query_sql, query_var)
-        database.commit()
+        be_db.insert(query_sql, query_var)
         
         # delete temp image after finish
         os.remove(imgfile)
@@ -163,14 +166,16 @@ async def signup(user_register: str = Form(), file: UploadFile = File(...)):
     return JSONResponse(jsonable_encoder(res))
 
 
-@ be_app.post("/api/sendimage")
-async def sendimage(image: UploadFile = File(...)):
-    imgdir="./temp/imgs/"
-    image.filename=f"{uuid.uuid4()}.jpg"
-    contents=await image.read()  # <-- Important!
-
-    # example of how you can save the file
-    with open(f"{imgdir}{image.filename}", "wb") as f:
-        f.write(contents)
-
-    return {"filename": image.filename}
+@ be_app.get("/api/auth/face_encode/{email}")
+async def verify(email: str):
+    print(email)
+    try:
+        code = be_db.read_user_face_raw(email)
+        res = {}
+        res['encode'] = code
+        return JSONResponse(jsonable_encoder(res))
+    except Exception as e:
+        print('!!!Server Error:', e)
+        error = {}
+        error['message'] = "Some errors occured"
+        return JSONResponse(content=error, status_code=status.HTTP_404_NOT_FOUND)
