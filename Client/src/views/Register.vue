@@ -19,12 +19,28 @@
                 <div class="mb-6">
                     <input type="dateofbirth" id="dateofbirth" v-model="register.dateofbirth" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm font-semibold rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="Date of birth(dd/mm/yyyy)" required>
                 </div>
-                <div class="mb-6" style="display: flex; justify-content: center;">
+                <!-- <div class="mb-6" style="display: flex; justify-content: center;">
                     <form class="text-black-500 border border-blue-500 hover:bg-blue-500 hover:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 font-semibold rounded-lg text-sm px-4 py-2 text-center">
                         <input style="display: none;"  id="file_upload" @change="getinputfile" type="file" accept="image/png, image/gif, image/jpeg, image.jpg"/> 
                         <label style="display: block;" for="file_upload">Upload your ID</label>
                     </form>
+                </div> -->
+
+                <div class="mb-6" style="display: flex; justify-content: center; margin: flex">
+                    <form class="text-black-500 border border-blue-500 hover:bg-blue-500 hover:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 font-semibold rounded-lg text-sm px-4 py-2 text-center">
+                        <input style="display: none;"  id="file_upload" @change="getinputfile" type="file" accept="image/png, image/gif, image/jpeg, image.jpg"/> 
+                        <label style="display: block;" for="file_upload">Upload your ID</label>
+                    </form>
+                    <div style="margin: 0 20px;"></div>
+                    <form class="text-black-500 border border-blue-500 hover:bg-blue-500 hover:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 font-semibold rounded-lg text-sm px-4 py-2 text-center" id="redirectForm" action="https://example.com/destination-page" method="get">
+
+
+                        <!-- Submit button -->
+                        <router-link to="/about" type="submit">Capture your photo</router-link>
+                        </form>
                 </div>
+
+                
 
                 <button type="submit" class="w-full text-blue-500 border border-blue-500 hover:bg-blue-500 hover:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 font-semibold rounded-lg text-sm px-4 py-2 text-center">Sign Up</button>
             </form>
