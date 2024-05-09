@@ -9,6 +9,7 @@ import json
 import pickle
 import uuid
 import os
+from SmartCom.cnn.cnn_test import face_check
 
 from SmartCom.face_validator import Face_Validator, Database
 import SmartCom.util as util
@@ -30,8 +31,11 @@ be_db = Database()
 origins = [
     "http://localhost",
     "http://localhost:5173",
+    "http://192.168.90.54",
+    "http://192.168.90.54:5173",
     "http://172.16.97.1",
-    "http://172.16.97.1:3000"
+    "http://172.16.97.1:3000",
+    "http://172.16.97.1:5173"
 ]
 
 be_app.add_middleware(
@@ -43,6 +47,8 @@ be_app.add_middleware(
 )
 
 face_read = Face_Validator()
+facecheck = face_check()
+
 
 @be_app.get("/")
 async def start():
@@ -146,6 +152,12 @@ async def signup(user_register: str = Form(), file: UploadFile = File(...)):
         f.write(contents)
     res = {"user": user['name'] , "message": "registration successful"}
     try:
+        # check if there is face in image
+        if facecheck.check_has_face(imgfile) == 0:
+            error = {}
+            error['message'] = "Could not find face in image"
+            os.remove(imgfile)
+            return JSONResponse(content=error, status_code=status.HTTP_404_NOT_FOUND)
         temp = face_read.get_face_from_image(imgfile)
         face = '[' + ','.join([str(x) for x in temp]) + ']'
         query_sql = "INSERT INTO `user` (email, password, name, face_encode) VALUES (%s, %s, %s, %s);"

@@ -2,8 +2,8 @@
 
 */node_modules
 
-*/__py*
-*/*/__py*
+**__py*
+
 */.venv
 
 .vscode*

@@ -69,8 +69,12 @@ class Database():
 
 
 class Face_Validator():
-    def __init__(self, wait=10):
-        self.video_capture = cv2.VideoCapture(0)
+    def __init__(self, vidcap: cv2.VideoCapture = None, wait=10):
+        self.video_capture = None
+        if vidcap is None:
+            self.video_capture = cv2.VideoCapture(0)
+        else:
+            self.video_capture = vidcap #cv2.VideoCapture(0)
         self.max_wait = wait
 
     def get_face_from_image(self, imgfile):
@@ -181,11 +185,11 @@ class Face_Validator():
                         name = known_face_names[first_match_index]
 
                     # # Or instead, use the known face with the smallest distance to the new face
-                    face_distances = face_recognition.face_distance(
-                        known_face_encodings, face)
-                    best_match_index = np.argmin(face_distances)
-                    if matches[best_match_index]:
-                        name = known_face_names[best_match_index]
+                    # face_distances = face_recognition.face_distance(
+                    #     known_face_encodings, face)
+                    # best_match_index = np.argmin(face_distances)
+                    # if matches[best_match_index]:
+                    #     name = known_face_names[best_match_index]
 
                     face_names.append(name)
 
