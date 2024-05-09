@@ -3,6 +3,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 // import Webpages
 import Home from '../views/Home.vue'
 import LoginView from '../views/Login.vue'
+import CameraView from '../views/Camera.vue'
 import RegisterView from '../views/Register.vue'
 import About from '../views/About.vue'
 import NotFound from '../views/NotFound.vue'
@@ -33,6 +34,13 @@ const routes = [
         component: LoginView,
         meta: {
             title: 'Login - Smart Konbini',
+        }
+    },
+    {
+        path: '/camera',
+        component: CameraView,
+        meta: {
+            title: 'Login - Buddy Matching System',
         }
     },
     {
@@ -138,7 +146,7 @@ import store from '../store'
 router.beforeEach((to, from, next) => {
 
     document.title = to.meta?.title ?? 'Blank'
-    const publicPages = ['/login', '/register', '/', '/about'];
+    const publicPages = ['/login', '/register', '/', '/about', '/camera'];
     const authRequired = !publicPages.includes(to.path);
     const loggedIn = localStorage.getItem('user');
 
@@ -152,7 +160,7 @@ router.beforeEach((to, from, next) => {
     if (authRequired && !loggedIn) {
         next('/');
     } 
-    else if (store.state.user && ['/login', '/register'].includes(to.path)) {
+    else if (store.state.user && ['/login', '/register', '/camera'].includes(to.path)) {
         next('/');
     } 
     else if (store.state.user && store.state.user.role === 'ROLE_STUDENT' && adminRoutes.includes(to.path)) {
