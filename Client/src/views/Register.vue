@@ -100,7 +100,7 @@
                         this.successful = true;
                         setTimeout(() => {
                             this.$router.push("/login");
-                        }, 2000);
+                        }, 8000);
                     },
                     (error) => {
                         this.message =
