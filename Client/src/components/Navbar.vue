@@ -153,18 +153,9 @@
                     </router-link>
                     </li>
                     <li style="margin-right: 20px;">
-                    <router-link to="/form" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-500 md:p-0">
-                        Form
+                    <router-link to="/Store" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-500 md:p-0">
+                        Store
                     </router-link>
-                    </li>
-                    <li style="margin-right: 20px;">
-                    <router-link to="/buddyA" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-500 md:p-0">Buddy A</router-link>
-                    </li>
-                    <li style="margin-right: 20px;">
-                    <router-link to="/buddyB" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-500 md:p-0">Buddy B</router-link>
-                    </li>
-                    <li>
-                    <router-link to="/contribute" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-500 md:p-0">Contribute</router-link>
                     </li>
                 </ul>
                 </div>
