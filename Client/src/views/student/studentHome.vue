@@ -46,7 +46,7 @@
                     <div class="ml-3">
                         <div class="text-sm">7 days ago</div>
                         <div class="font-semibold">
-                            <router-link to="/student" class="text-blue-700 hover:text-blue-500" style="cursor: pointer;">OISP</router-link> posted <router-link to="/student" class="text-blue-700 hover:text-blue-500" style="cursor: pointer;">An insight on Buddy Matching System</router-link>
+                            <router-link to="/student" class="text-blue-700 hover:text-blue-500" style="cursor: pointer;">Admin</router-link> posted <router-link to="/student" class="text-blue-700 hover:text-blue-500" style="cursor: pointer;">An insight on  SmartKonbini System</router-link>
                         </div>
                         <div>
                             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi...
@@ -66,9 +66,9 @@
             </div>
             <div class="rounded-lg h-40 w-80 mb-10" style="background: linear-gradient(180deg, #7013f2 0%, #b13df5 150%);">
                 <div class="mt-4 ml-4">
-                    <div class="text-xl font-semibold text-white">View results?</div>
-                    <div class="mb-10 text-white">View your Buddy Matching results!</div>
-                    <button type="button" @click="$router.push('/buddyB')" class="text-black bg-white font-semibold rounded-lg text-sm px-4 py-2 text-center">Buddy B</button>
+                    <div class="text-xl font-semibold text-white">View store?</div>
+                    <div class="mb-10 text-white">View your cart!</div>
+                    <button type="button" @click="$router.push('/store')" class="text-black bg-white font-semibold rounded-lg text-sm px-4 py-2 text-center">Store</button>
                 </div>    
             </div>
             <div class="rounded-lg h-40 w-80 mb-10" style="background: linear-gradient(180deg, #4a4949 0%, #F8F8F8 500%);">
@@ -84,7 +84,7 @@
                 <img class="w-28 h-28 ml-16 mr-5" src="/images/bubble_chat.png" alt="contact">
                 <div class="rounded-lg bg-transparent h-40 w-80 mb-10">
                     <div class="text-xl font-semibold">Need infos?</div>
-                    <div class="md:mr-0 mr-12">Contact OISP now!</div><br>
+                    <div class="md:mr-0 mr-12">Contact us now!</div><br>
                     <button type="button" @click="$router.push('/contact')" class="text-black border border-gray-200 hover:bg-gray-200 font-semibold rounded-lg text-sm px-4 py-2 text-center">Contact</button>
                 </div>
             </div>

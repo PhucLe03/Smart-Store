@@ -9,6 +9,7 @@ import About from '../views/About.vue'
 import NotFound from '../views/NotFound.vue'
 
 import StudentHomeView from '../views/student/studentHome.vue'
+import storeView from '../views/student/Shopping.vue'
 import FormView from '../views/student/formView.vue'
 import FormResultView from '../views/student/formResult.vue'
 import buddyBView from '../views/student/buddyB.vue'
@@ -69,6 +70,13 @@ const routes = [
         component: FormView,
         meta: {
             title: 'Form - Smart Konbini',
+        }
+    },
+    {
+        path: '/store',
+        component: storeView,
+        meta: {
+            title: 'shopping - Smart Konbini',
         }
     },
     {
@@ -150,8 +158,8 @@ router.beforeEach((to, from, next) => {
     const authRequired = !publicPages.includes(to.path);
     const loggedIn = localStorage.getItem('user');
 
-    const studentRoutes = ['/form', '/form-result', '/student-result', '/student']
-    const adminRoutes = ['/match', '/oisp-result', '/admin']
+    const studentRoutes = ['/form', '/form-result', '/student-result', '/student', '/store']
+    const adminRoutes = ['/match', '/oisp-result', '/admin', '/store']
     // const formPaths = ['/form', '/form-result']
   
     // trying to access a restricted page + not logged in
