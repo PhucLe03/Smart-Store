@@ -86,19 +86,12 @@
                             <img class="w-14 h-14 rounded-full mr-4" src="/images/profile.png" alt="user photo">
                             <div>
                                 <span class="block text-lg font-semibold text-gray-900">{{currentUser.username}}</span>
-                                <span class="block text-sm font-semibold text-yellow-400 truncate">Student</span>
+                                <span class="block text-sm font-semibold text-yellow-400 truncate">Customer</span>
                             </div>
                             </div>
                             <div>
                                 <div class="px-4 py-2 text-sm"> 
                                     <span class="font-bold">Email: </span> {{currentUser.email}}
-                                </div>
-                                <div class="px-4 py-2 text-sm"> 
-                                    <span class="font-bold">Student ID: </span> {{currentUser.studentCode}}
-                                </div>
-
-                                <div class="px-4 py-2 text-sm"> 
-                                    <span class="font-bold">Class: </span> {{currentUser.classCode}}
                                 </div>
                             </div>
                             
@@ -251,7 +244,7 @@
                     <img class="w-14 h-14 rounded-full mr-4" src="/images/system.png" alt="user photo">
                     <div>
                         <span class="block text-lg font-semibold text-gray-900">{{ currentUser.username }}</span>
-                        <span class="block text-sm font-semibold text-yellow-400 truncate">OISP</span>
+                        <span class="block text-sm font-semibold text-yellow-400 truncate">SmartKonbini</span>
                     </div>
                     </div>
 
