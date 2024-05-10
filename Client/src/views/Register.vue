@@ -36,7 +36,7 @@
 
 
                         <!-- Submit button -->
-                        <router-link to="/about" type="submit">Capture your photo</router-link>
+                        <router-link to="/camera" type="submit">Capture your photo</router-link>
                         </form>
                 </div>
 

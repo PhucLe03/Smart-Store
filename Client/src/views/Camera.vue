@@ -1,12 +1,15 @@
 <template>
     <body>
-        <div class="justify-center flex items-center">
+        <div class="justify-center flex items-center flex-col">
             <video ref="video" autoplay playsinline webkit-playsinline muted hidden @submit.prevent="onMounted"></video>
             <canvas ref="canvas" width="720" height="480" class = "bg-black rounded-3x1"></canvas>
             <br/>
-            <!-- <div class="flex items-center justify-content py-4">
-                <button @click="TakePicture" class="px-6 py-4 bg-green-500 rounded text-white text-2x1 uppercase font-bold hover:bg-green-600">Take Picture</button>
-            </div> -->
+            <div class="flex items-center justify-content py-4 flex-row">
+                <button class="flex text-black-500 border border-blue-500 hover:bg-blue-500 hover:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 font-semibold rounded-lg text-sm px-4 py-2 text-center m-5">
+                    <router-link to="/register" type="submit">Back {{'<'}}</router-link>
+                </button>
+                <button @click="TakePicture" class="items-center relative px-6 py-4 bg-green-500 rounded text-white text-2x1 uppercase font-bold hover:bg-green-600">Take Picture</button>
+            </div>
         </div>
     </body>
 </template>
@@ -55,7 +58,7 @@
     export default {
         name: "CameraView",
         data() {
-            return video;
+            // return video;
         },
     };
 </script>
