@@ -12,12 +12,11 @@
                 </div>
             </div>
         </header>
-    
         <div v-if="page === 'cart'">
-            <Cart v-on:removeItemFromCart="removeItemFromCart" :cart="cart" />
+            <Cart v-on:removeItemFromCart="removeItemFromCart" :cart="cart" v-on:clearCart="clearCart" />
         </div>
     
-        <div v-if="page === 'products'">
+        <div v-if="page === 'products'" v-on:increment="increment" v-on:decrement="decrement">
           <Products v-on:addItemToCart="addItemToCart" />
         </div>
     </div>
@@ -44,6 +43,16 @@ export default {
         },
         navigateTo(page) {
             this.page = page;
+        },
+        clearCart() {
+            this.cart = [];
+        },
+        increment(id) {
+            console.log("increment")
+            this.product[id].quantity++;
+        },
+        decrement(id) {
+            this.product[id].quantity--;
         }
     },
     components: { Products, Cart }
