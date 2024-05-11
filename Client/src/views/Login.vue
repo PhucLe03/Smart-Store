@@ -1,8 +1,8 @@
 <template>
     <body>
         <div class="max-w-md mx-auto bg-white rounded-lg p-6 shadow-md mt-16" style="font-family: 'Comfortaa';">
-            <div class="flex items-center justify-center text-2xl font-semibold whitespace-nowrap mb-4" style="color: #00CDE8; ">Galacticos</div>  
-            <div class="flex items-center justify-center text-xl font-semibold whitespace-nowrap mb-8" style="">Buddy Matching System</div>  
+            <div class="flex items-center justify-center text-2xl font-semibold whitespace-nowrap mb-4" style="color: #00CDE8; ">Login</div>  
+            <div class="flex items-center justify-center text-xl font-semibold whitespace-nowrap mb-8" style="">SmartKonbini System</div>  
             <a class="flex items-center justify-center text-xl font-semibold whitespace-nowrap mb-8" style="" href="/camera">Camera</a>
             <form class="mb-4" @submit.prevent="handleLogin">
                 <div class="mb-6">
